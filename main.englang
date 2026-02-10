@@ -1,0 +1,8 @@
+Var1 which is a number represents 5.
+Var2 which is a number represents 10.
+
+"Add" takes X which is a number and Y which is a number: 
+Outputs, X plus Y.
+Thanks.
+
+"Add" Var1 and Var2 then "Print" it.
