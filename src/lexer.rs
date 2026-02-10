@@ -1,4 +1,4 @@
-use std::iter::Peekable;
+use std::{iter::Peekable, str::Chars};
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum TokenType {
@@ -10,6 +10,7 @@ pub enum TokenType {
     Outputs,
     Thanks,
     And,
+    Then,
 
     // Identifiers, Literals
     String(String),
@@ -21,8 +22,8 @@ pub enum TokenType {
     // Punctuation
     Colon,
     Comma,
-    Plus,
-    Minus,
+    Add,
+    Sub,
 
     Dot,
     Eof,
@@ -41,7 +42,7 @@ impl Token {
 }
 
 pub struct Lexer<'a> {
-    input: Peekable<std::str::Chars<'a>>,
+    input: Peekable<Chars<'a>>,
     line: usize,
 }
 
@@ -87,14 +88,11 @@ impl<'a> Lexer<'a> {
                     self.input.next();
                     Some(Token::new(TokenType::Colon, self.line))
                 }
-
                 _ => {
                     self.input.next();
-
                     None
                 }
             },
-
             None => Some(Token::new(TokenType::Eof, self.line)),
         }
     }
@@ -140,17 +138,15 @@ impl<'a> Lexer<'a> {
             }
             "number" => TokenType::DataType(String::from("number")),
             "string" => TokenType::DataType(String::from("string")),
-
-            "plus" => TokenType::Plus,
-            "minus" => TokenType::Minus,
-
+            "plus" => TokenType::Add,
+            "minus" => TokenType::Sub,
             "represents" => TokenType::Represents,
             "takes" => TokenType::Takes,
             "it" => TokenType::It,
-            "Outputs" => TokenType::Outputs,
-            "Thanks" => TokenType::Thanks,
+            "outputs" => TokenType::Outputs,
+            "thanks" => TokenType::Thanks,
             "and" => TokenType::And,
-
+            "then" => TokenType::Then,
             _ => TokenType::Ident(word),
         };
 
